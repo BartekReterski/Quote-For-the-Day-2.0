@@ -7,7 +7,7 @@
     tools:context=".activities.MainActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/quoteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
@@ -27,10 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/_150sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:menu_animationDelayPerItem="55"
         app:menu_backgroundColor="@android:color/transparent"
         app:menu_buttonSpacing="0dp"

@@ -2,22 +2,21 @@ package com.dayquote.quotefortheday.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.dayquote.quotefortheday.R;
-
+import com.dayquote.quotefortheday.models.QuoteDatabase;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.Random;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,12 +31,78 @@ public class MainActivity extends AppCompatActivity {
         Realm.init(this);
         //realm = Realm.getDefaultInstance();
 
+        CreatePrePopulateDatabase();
+        DatabaseLogic();
 
     }
-    @Override
-    protected void onDestroy () {
-        realm.close();
-        super.onDestroy();
+
+
+    private void DatabaseLogic(){
+
+        try {
+
+            // wyświetlanie losowego cytatu
+            RealmResults<QuoteDatabase> results = realm.where(QuoteDatabase.class).findAll();
+            Random random = new Random();
+            int randomQuote = random.nextInt(results.size());
+            QuoteDatabase randomQuotePrinted = results.get(randomQuote);
+            String quoteName = randomQuotePrinted.getQuoteName();
+            String quoteAuthor = randomQuotePrinted.getQuoteAuthor();
+            String quoteWiki = randomQuotePrinted.getQuoteWiki();
+
+            //usuwanie wybranego cytatu
+            RealmResults<QuoteDatabase> rows = realm.where(QuoteDatabase.class).equalTo("quoteName", quoteName).findAll();
+            realm.beginTransaction();
+            rows.deleteAllFromRealm();
+            realm.commitTransaction();
+
+        }catch (Exception ex){
+
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    //stworzenie załadowanej bazy
+    private void CreatePrePopulateDatabase () {
+
+        RealmConfiguration config0 = new RealmConfiguration.Builder()
+                .name("quotesDatabase.realm")
+                .build();
+
+        realm = Realm.getInstance(config0);
+
+        //sprawdzenie czy istnieje baza oraz czy jest pusta- jeśli tak to kopiuje baze
+        if(new File(config0.getPath()).exists()){
+            Toast.makeText(this,"Database exist",Toast.LENGTH_LONG).show();
+            RealmResults<QuoteDatabase> results = realm.where(QuoteDatabase.class).findAll();
+
+            if(results.isEmpty()){
+                copyBundledRealmFile(this.getResources().openRawResource(R.raw.quotes200), "quotesDatabase.realm");
+                Toast.makeText(this,"Skopiowano baze, bo jest pusta",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+    //pobranie bazy danych z plikun.realm
+    private String copyBundledRealmFile (InputStream inputStream, String outFileName){
+        try {
+            File file = new File(this.getFilesDir(), outFileName);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buf)) > 0) {
+                outputStream.write(buf, 0, bytesRead);
+            }
+            outputStream.close();
+            return file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 
@@ -63,5 +128,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+     @Override
+    protected void onDestroy () {
+        realm.close();
+        super.onDestroy();
     }
 }
