@@ -3,9 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_notification"
-        android:icon="@drawable/notification_icon"
+        android:icon="@drawable/notification_toolbar_icon"
         android:title="Notification"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_about_app"
         android:title="About app"

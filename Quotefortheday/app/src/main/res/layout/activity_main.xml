@@ -32,7 +32,7 @@
         app:menu_animationDelayPerItem="55"
         app:menu_backgroundColor="@android:color/transparent"
         app:menu_buttonSpacing="0dp"
-        app:menu_colorNormal="@color/purple_700"
+        app:menu_colorNormal="@color/picker_color"
         app:menu_colorPressed="@color/purple_500"
         app:menu_colorRipple="#99d4d4d4"
         app:menu_fab_size="normal"
