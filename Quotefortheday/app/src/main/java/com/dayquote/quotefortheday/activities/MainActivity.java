@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.dayquote.quotefortheday.R;
+import com.dayquote.quotefortheday.models.FavoriteDatabase;
 import com.dayquote.quotefortheday.models.QuoteDatabase;
 import com.dayquote.quotefortheday.services.AlarmReceiver;
 import com.eggheadgames.realmassethelper.IRealmAssetHelperStorageListener;
@@ -73,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         //turn off night mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         Realm.init(this);
-         CreatePrePopulateDatabase();
-         FloatedButtonsLogic();
-         DatabaseLogic();
+        CreatePrePopulateDatabase();
+        FloatedButtonsLogic();
+        DatabaseLogic();
 
         //odebranie danych z shared preferences
         SharedPreferences sharedPreferences1=getSharedPreferences("PREFS",MODE_PRIVATE);
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         quoteWiki=sharedPreferences1.getString("quoteWiki","null");
         TextView quoteText= findViewById(R.id.quoteText);
         quoteText.setText(quoteName+" \n\n"+" - "+quoteAuthor);
-       // Action24h();
+        // Action24h();
 
 
     }
@@ -146,19 +147,21 @@ public class MainActivity extends AppCompatActivity {
             RealmAssetHelper.getInstance(this).loadDatabaseToStorage("database", "quotes200", new IRealmAssetHelperStorageListener() {
                 @Override
                 public void onLoadedToStorage(String realmDbName, RealmAssetHelperStatus status) {
-                   realmConfig = new RealmConfiguration.Builder()
+                    realmConfig = new RealmConfiguration.Builder()
                             .name(realmDbName)
+                            .deleteRealmIfMigrationNeeded()
                             .build();
                     realm = Realm.getInstance(realmConfig);
 
                 }
-        });
+            });
             //jeśli baza jest pusta wczyanie raz jeszcze innej
             RealmResults<QuoteDatabase> results = realm.where(QuoteDatabase.class).findAll();
             if(results.size()==0){
                 Toast.makeText(MainActivity.this,"jest pusta",Toast.LENGTH_SHORT).show();
                 realmConfig = new RealmConfiguration.Builder()
                         .name("quote200.realm")
+                        .deleteRealmIfMigrationNeeded()
                         .build();
                 realm = Realm.getInstance(realmConfig);
                 copyBundledRealmFile(this.getResources().openRawResource(R.raw.quotes200),"quotes200.realm");
@@ -199,15 +202,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_notification:
-
                 Notifications();
                 return true;
             case R.id.action_about_app:
-               // Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.action_settings:
                 return  true;
+
+            case  R.id.action_favorites:
+                Intent intent= new Intent(MainActivity.this,FavoriteActivity.class);
+                startActivity(intent);
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -249,9 +256,16 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        mFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FavoriteLogic();
+            }
+        });
+
     }
 
-//zapisanie screenshot w postaci bitmapy
+    //zapisanie screenshot w postaci bitmapy
     public void saveBitmap() {
         RuntimePermissions();
         Bitmap bitmap= getBitmapFromView();
@@ -457,5 +471,39 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void FavoriteLogic(){
+        try{
+
+            RealmConfiguration favoriteConfig= new RealmConfiguration.Builder()
+                    .name("favoriteQuotes.realm")
+                    .build();
+
+            realm= Realm.getInstance(favoriteConfig);
+
+            realm.beginTransaction();
+            FavoriteDatabase object=realm.where(FavoriteDatabase.class)
+                    .equalTo("quoteNameFav",quoteName)
+                    .findFirst();
+            if(object==null) {
+                FavoriteDatabase favoriteDatabase = realm.createObject(FavoriteDatabase.class);
+                favoriteDatabase.setQuoteAuthorFav(quoteAuthor);
+                favoriteDatabase.setQuoteNameFav(quoteName);
+                favoriteDatabase.setQuoteWikiFav(quoteWiki);
+                Toast.makeText(MainActivity.this, "Saved quote", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this,FavoriteActivity.class);
+                startActivity(intent);
+            }else{
+
+                Toast.makeText(MainActivity.this,"Quote with this name is already saved",Toast.LENGTH_LONG).show();
+            }
+            realm.commitTransaction();
+        }catch (Exception ex){
+
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
 
 }

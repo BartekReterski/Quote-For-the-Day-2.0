@@ -8,6 +8,10 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_favorites"
+        android:title="Favorites"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:title="Settings"
         app:showAsAction="never" />
