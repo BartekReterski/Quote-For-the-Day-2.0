@@ -3,6 +3,8 @@ package com.dayquote.quotefortheday.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dayquote.quotefortheday.R;
+import com.dayquote.quotefortheday.activities.MainActivity;
+import com.dayquote.quotefortheday.activities.WikiActivity;
 import com.dayquote.quotefortheday.models.FavoriteDatabase;
 
 import java.util.List;
@@ -68,10 +72,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                         switch (item.getItemId()) {
                             case R.id.shareItem:
 
+                                Intent txtShare = new Intent(android.content.Intent.ACTION_SEND);
+                                txtShare .setType("text/plain");
+                                txtShare .putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+                                txtShare .putExtra(android.content.Intent.EXTRA_TEXT,  deleteQuoteName+" \n\n"+" - "+favoriteQuoteAuthor);
+                                mCtx.startActivity(Intent.createChooser(txtShare ,"Share via:"));
                                 break;
 
                             case R.id.wikiItem:
 
+                                Intent intentWiki = new Intent(mCtx, WikiActivity.class);
+                                intentWiki.putExtra("quoteWiki",favoriteQuoteWiki);
+                                intentWiki.putExtra("quoteAuthor",favoriteQuoteAuthor);
+                                mCtx.startActivity(intentWiki);
                                 break;
                             case R.id.deleteItem:
 
