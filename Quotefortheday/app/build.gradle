@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'gun0912.ted:tedpermission:2.2.3'
     implementation 'com.github.eggheadgames:android-realm-asset-helper:2.1.0'
-    implementation 'com.yarolegovich:lovely-dialog:1.1.1'
+    implementation 'com.github.MohamedWessam:no-internet-layout:0.1.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

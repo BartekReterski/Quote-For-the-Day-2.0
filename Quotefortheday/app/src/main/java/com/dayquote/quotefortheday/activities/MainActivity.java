@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Network;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -43,6 +44,10 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.wessam.library.LayoutImage;
+import com.wessam.library.NetworkChecker;
+import com.wessam.library.NoInternetLayout;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -232,10 +237,11 @@ public class MainActivity extends AppCompatActivity {
         mWiki.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MainActivity.this,WikiActivity.class);
-                intent.putExtra("quoteWiki",quoteWiki);
-                intent.putExtra("quoteAuthor",quoteAuthor);
-                startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, WikiActivity.class);
+                    intent.putExtra("quoteWiki", quoteWiki);
+                    intent.putExtra("quoteAuthor", quoteAuthor);
+                    startActivity(intent);
+
             }
         });
 

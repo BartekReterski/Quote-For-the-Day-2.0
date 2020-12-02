@@ -7,8 +7,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="@dimen/_5sdp"
+        android:layout_height="match_parent"
+        app:cardMaxElevation="@dimen/_1sdp"
+        app:cardElevation="@dimen/_1sdp"
         app:cardCornerRadius="@dimen/_5sdp"
         android:layout_margin="@dimen/_3sdp">
 
@@ -37,7 +38,7 @@
                 android:layout_marginStart="@dimen/_3sdp"
                 android:text="ABC"
                 android:padding="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:gravity="center"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
