@@ -44,10 +44,6 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.wessam.library.LayoutImage;
-import com.wessam.library.NetworkChecker;
-import com.wessam.library.NoInternetLayout;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -91,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
         TextView quoteText= findViewById(R.id.quoteText);
         quoteText.setText(quoteName+" \n\n"+" - "+quoteAuthor);
         // Action24h();
-
-
+        
     }
 
     private void Action24h(){

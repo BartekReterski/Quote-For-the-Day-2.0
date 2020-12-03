@@ -2,13 +2,14 @@ package com.dayquote.quotefortheday.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +18,17 @@ import android.widget.Toast;
 import com.dayquote.quotefortheday.R;
 import com.dayquote.quotefortheday.adapters.FavoriteAdapter;
 import com.dayquote.quotefortheday.models.FavoriteDatabase;
+import com.dayquote.quotefortheday.models.RealmFavoriteDeserialize;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,6 +84,10 @@ public class FavoriteActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_sort:
                     SortLogic();
+                return true;
+
+            case R.id.action_save_to_file:
+                SavetoFile();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -133,6 +148,69 @@ public class FavoriteActivity extends AppCompatActivity {
         AlertDialog alert = alertDialog.create();
 
         alert.show();
+    }
+
+    private void SavetoFile(){
+        
+        RuntimePermissions();
+        String fullData=null;
+
+        try {
+            RealmResults<FavoriteDatabase> realmObj = realm.where(FavoriteDatabase.class).findAll();
+            String allResult=new Gson().toJson(realm.copyFromRealm(realmObj));
+
+            File defaultFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dailyQuotes");
+            if (!defaultFile.exists())
+                defaultFile.mkdirs();
+
+            String filename = "favoriteQuotes.txt";
+
+            File file = new File(defaultFile, filename);
+            if (file.exists()) {
+                file.delete();
+                file = new File(defaultFile, filename);
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            OutputStreamWriter outputStreamWriter= new OutputStreamWriter(output);
+            Gson gson= new Gson();
+            Type type = new TypeToken<List<RealmFavoriteDeserialize>>(){}.getType();
+            List<RealmFavoriteDeserialize> contactList = gson.fromJson(allResult, type);
+            for (RealmFavoriteDeserialize contact : contactList){
+                Log.i("Contact Details", contact.getQuoteNameFav() + "-" + contact.getQuoteAuthorFav() + "-" + contact.getQuoteWikiFav());
+                outputStreamWriter.write(contact.getQuoteNameFav()+contact.getQuoteAuthorFav());
+            }
+
+            outputStreamWriter.close();
+
+
+        }catch (Exception exception){
+
+            System.out.println(exception.getMessage());
+        }
+
+    }
+
+    //zadeklarowanie uprawnień
+    private void RuntimePermissions() {
+
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                //    Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(FavoriteActivity.this, "Permissions denied", Toast.LENGTH_LONG).show();
+            }
+        };
+
+
+        TedPermission.with(getApplicationContext())
+                .setPermissionListener(permissionListener)
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check();
     }
     @Override
     protected void onDestroy() {

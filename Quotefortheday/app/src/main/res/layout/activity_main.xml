@@ -7,13 +7,15 @@
     android:background="@color/backgroundColor"
     tools:context=".activities.MainActivity">
 
+
+
     <TextView
         android:id="@+id/quoteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_40sdp"
         android:gravity="center"
+        android:padding="@dimen/_10sdp"
         android:text="Życie to jest wielka wieża, taka wieża w morde jeża\n -Roman Kurski-Miodowe Lata"
         android:textSize="@dimen/_15sdp"
         android:textStyle="bold"

@@ -16,10 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuoteForTheDay"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.FavoriteActivity"></activity>
+        <activity android:name=".activities.SettingsActivity"
+         android:parentActivityName=".activities.MainActivity">
+        </activity>
+        <activity android:name=".activities.FavoriteActivity" />
         <activity
             android:name=".activities.WikiActivity"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +42,7 @@
             <!-- ressource file to create -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path"></meta-data>
+                android:resource="@xml/file_path" />
         </provider>
     </application>
 
