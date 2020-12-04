@@ -146,15 +146,13 @@ public class FavoriteActivity extends AppCompatActivity {
         });
 
         AlertDialog alert = alertDialog.create();
-
         alert.show();
     }
 
+    //eksport ulubionych cytatów do pliku tekstowego
     private void SavetoFile(){
         
         RuntimePermissions();
-        String fullData=null;
-
         try {
             RealmResults<FavoriteDatabase> realmObj = realm.where(FavoriteDatabase.class).findAll();
             String allResult=new Gson().toJson(realm.copyFromRealm(realmObj));
@@ -177,9 +175,10 @@ public class FavoriteActivity extends AppCompatActivity {
             List<RealmFavoriteDeserialize> contactList = gson.fromJson(allResult, type);
             for (RealmFavoriteDeserialize contact : contactList){
                 Log.i("Contact Details", contact.getQuoteNameFav() + "-" + contact.getQuoteAuthorFav() + "-" + contact.getQuoteWikiFav());
-                outputStreamWriter.write(contact.getQuoteNameFav()+contact.getQuoteAuthorFav());
-            }
+                outputStreamWriter.write(" \n\n"+contact.getQuoteNameFav()+" \n\n"+" - "+contact.getQuoteAuthorFav());
 
+            }
+            Toast.makeText(FavoriteActivity.this,"File was saved in"+defaultFile,Toast.LENGTH_LONG).show();
             outputStreamWriter.close();
 
 

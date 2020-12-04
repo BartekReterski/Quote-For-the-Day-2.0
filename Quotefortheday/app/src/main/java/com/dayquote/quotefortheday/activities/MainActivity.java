@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_notification:
+
                 Notifications();
                 return true;
             case R.id.action_about_app:
@@ -209,11 +210,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_settings:
+
+                Intent intentSettings= new Intent(MainActivity.this,SettingsActivity.class);
+                startActivity(intentSettings);
                 return  true;
 
             case  R.id.action_favorites:
-                Intent intent= new Intent(MainActivity.this,FavoriteActivity.class);
-                startActivity(intent);
+
+                Intent intentFavorite= new Intent(MainActivity.this,FavoriteActivity.class);
+                startActivity(intentFavorite);
                 return true;
 
             default:
