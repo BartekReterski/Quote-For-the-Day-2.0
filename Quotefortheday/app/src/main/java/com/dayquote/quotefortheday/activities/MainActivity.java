@@ -2,6 +2,7 @@ package com.dayquote.quotefortheday.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
@@ -13,8 +14,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Network;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +26,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +49,9 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -74,10 +82,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //turn off night mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+
         Realm.init(this);
         CreatePrePopulateDatabase();
         FloatedButtonsLogic();
         DatabaseLogic();
+
+        //odebranie danych na temat wybranego tła i sprawdzenie czy dane są poprawne
+        SharedPreferences prefs2 = getSharedPreferences("PREFS_BACK",
+                MODE_PRIVATE);
+        String stringBackground = prefs2.getString("background", "");
+        ConstraintLayout constraintLayout= findViewById(R.id.contraint_layout);
+        int checkExistence = getResources().getIdentifier(stringBackground, "drawable",getPackageName());
+
+        if(stringBackground.isEmpty() || (stringBackground ==null) || (checkExistence ==0)) {
+
+        }else{
+            constraintLayout.setBackgroundResource(Integer.parseInt(stringBackground));
+        }
+
+
 
         //odebranie danych z shared preferences
         SharedPreferences sharedPreferences1=getSharedPreferences("PREFS",MODE_PRIVATE);
@@ -101,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("day", currentDay);
             editor.apply();
 
+            DatabaseLogic();
 
         }
     }
