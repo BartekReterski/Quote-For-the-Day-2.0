@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     private void CreatePrePopulateDatabase () {
         try {
             //wczytanie bazy danych domyślnej
-            RealmAssetHelper.getInstance(this).loadDatabaseToStorage("database", "quotes200", new IRealmAssetHelperStorageListener() {
+            RealmAssetHelper.getInstance(this).loadDatabaseToStorage("database", "quotes1012", new IRealmAssetHelperStorageListener() {
                 @Override
                 public void onLoadedToStorage(String realmDbName, RealmAssetHelperStatus status) {
                     realmConfig = new RealmConfiguration.Builder()
@@ -183,11 +183,11 @@ public class MainActivity extends AppCompatActivity {
             if(results.size()==0){
                 Toast.makeText(MainActivity.this,"jest pusta",Toast.LENGTH_SHORT).show();
                 realmConfig = new RealmConfiguration.Builder()
-                        .name("quote200.realm")
+                        .name("quotes1012.realm")
                         .deleteRealmIfMigrationNeeded()
                         .build();
                 realm = Realm.getInstance(realmConfig);
-                copyBundledRealmFile(this.getResources().openRawResource(R.raw.quotes200),"quotes200.realm");
+                copyBundledRealmFile(this.getResources().openRawResource(R.raw.quotes1012),"quotes1012.realm");
             }
 
         }catch (Exception ex){

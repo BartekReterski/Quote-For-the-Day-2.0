@@ -23,7 +23,8 @@
             <ImageView
                 android:id="@+id/background_Image"
                 android:layout_width="wrap_content"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
                 android:layout_height="@dimen/_300sdp"
                 android:src="@drawable/ic_launcher_background" />
 
