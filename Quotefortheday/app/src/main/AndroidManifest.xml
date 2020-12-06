@@ -19,7 +19,9 @@
         <activity android:name=".activities.SettingsActivity"
          android:parentActivityName=".activities.MainActivity">
         </activity>
-        <activity android:name=".activities.FavoriteActivity" />
+        <activity android:name=".activities.FavoriteActivity"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
         <activity
             android:name=".activities.WikiActivity"
             android:parentActivityName=".activities.MainActivity" />

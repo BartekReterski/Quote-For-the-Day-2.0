@@ -19,11 +19,17 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dayquote.quotefortheday.R;
 import com.dayquote.quotefortheday.activities.MainActivity;
 import com.dayquote.quotefortheday.activities.WikiActivity;
 import com.dayquote.quotefortheday.models.FavoriteDatabase;
 import com.dayquote.quotefortheday.models.SettingsModel;
+import com.stfalcon.imageviewer.StfalconImageViewer;
+import com.stfalcon.imageviewer.loader.ImageLoader;
+
 import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -52,9 +58,12 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
     public void onBindViewHolder(SettingsViewHolder holder, int position) {
         SettingsModel settingsModel = settingsModelsList.get(position);
 
-       holder.imageBackground.setImageResource(settingsModel.getImage());
+       //holder.imageBackground.setImageResource(settingsModel.getImage());
+        Glide.with(mCtx).load(settingsModel.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.imageBackground);
        holder.imageDescription.setText(settingsModel.getImageDescription());
        int uriPath=settingsModel.getImage();
+
+
        holder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -84,11 +93,13 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         TextView imageDescription;
         ImageView imageBackground;
 
+
         public SettingsViewHolder(View itemView) {
             super(itemView);
 
            imageDescription= itemView.findViewById(R.id.background_Image_Description);
            imageBackground=itemView.findViewById(R.id.background_Image);
+
         }
     }
 

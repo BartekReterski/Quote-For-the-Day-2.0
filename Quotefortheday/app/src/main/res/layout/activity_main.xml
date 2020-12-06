@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/contraint_layout"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="@drawable/image_b"
     tools:context=".activities.MainActivity">
 
     <TextView
@@ -17,6 +17,7 @@
         android:padding="@dimen/_10sdp"
         android:text="“To remain stable is to refrain from trying to separate yourself from a pain because you know that you cannot. Running away from fear is fear, fighting pain is pain, trying to be brave is being scared. If the mind is in pain, the mind is pain. The thinker has no other form than his thought. There is no escape.”"
         android:textSize="@dimen/_15sdp"
+        android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -49,8 +49,6 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //turn off night mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
 
         Realm.init(this);
         CreatePrePopulateDatabase();
@@ -101,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             constraintLayout.setBackgroundResource(Integer.parseInt(stringBackground));
         }
-
 
 
         //odebranie danych z shared preferences

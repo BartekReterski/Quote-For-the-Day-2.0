@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
                 android:id="@+id/background_Image"
                 android:layout_width="wrap_content"
                 android:scaleType="centerCrop"
-                android:layout_height="@dimen/_200sdp"
+                android:layout_height="@dimen/_300sdp"
                 android:src="@drawable/ic_launcher_background" />
 
             <TextView
