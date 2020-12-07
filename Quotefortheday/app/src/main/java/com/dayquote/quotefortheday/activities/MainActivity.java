@@ -1,5 +1,7 @@
 package com.dayquote.quotefortheday.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,6 +15,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -26,6 +29,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +42,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.dayquote.quotefortheday.R;
 import com.dayquote.quotefortheday.models.FavoriteDatabase;
 import com.dayquote.quotefortheday.models.QuoteDatabase;
@@ -54,6 +62,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import android.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -100,6 +109,29 @@ public class MainActivity extends AppCompatActivity {
             constraintLayout.setBackgroundResource(Integer.parseInt(stringBackground));
         }
 
+            //odebranie danych na temat wybranego tła z dysku użytkownika oraz ustawienie tła layoutu
+            SharedPreferences prefs3 = getSharedPreferences("PREFS_BACK_DISK",
+                    MODE_PRIVATE);
+            String stringBackgroundFromDisk = prefs3.getString("backgroundFromDisk", "");;
+            if (stringBackgroundFromDisk.isEmpty() || (stringBackgroundFromDisk == null)) {
+
+            } else {
+
+                Glide.with(this).load((stringBackgroundFromDisk)).into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+
+                        ConstraintLayout constraintLayout= findViewById(R.id.contraint_layout);
+                        constraintLayout.setBackground(resource);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
+            }
+
 
         //odebranie danych z shared preferences
         SharedPreferences sharedPreferences1=getSharedPreferences("PREFS",MODE_PRIVATE);
@@ -111,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
         // Action24h();
         
     }
+
+
+
 
     private void Action24h(){
         Calendar calendar = Calendar.getInstance();

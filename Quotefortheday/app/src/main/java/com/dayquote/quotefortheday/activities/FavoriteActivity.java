@@ -87,7 +87,13 @@ public class FavoriteActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_save_to_file:
-                SavetoFile();
+                RealmResults<FavoriteDatabase> results = realm.where(FavoriteDatabase.class).findAll();
+                if(results.isEmpty()){
+                    Toast.makeText(FavoriteActivity.this,"Favorite Quotes is empty - Please add quotes",Toast.LENGTH_LONG).show();
+                }else{
+                    SavetoFile();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

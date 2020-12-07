@@ -58,6 +58,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
        holder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
+               //usuniecie sharedpreferences z wyboru zdjecia z dysku
+               SharedPreferences sharedPreferencesRemove=mCtx.getSharedPreferences("PREFS_BACK_DISK",MODE_PRIVATE);
+               sharedPreferencesRemove.edit().remove("backgroundFromDisk").apply();
+
                //wysłanie danych tymczasowych shared preferences
                SharedPreferences sharedPreferences=mCtx.getSharedPreferences("PREFS_BACK",MODE_PRIVATE);
                SharedPreferences.Editor editor=sharedPreferences.edit();

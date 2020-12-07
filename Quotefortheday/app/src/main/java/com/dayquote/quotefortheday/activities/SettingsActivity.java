@@ -8,29 +8,26 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
 import com.dayquote.quotefortheday.R;
 import com.dayquote.quotefortheday.adapters.SettingsAdapter;
 import com.dayquote.quotefortheday.models.SettingsModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
 
 
 public class SettingsActivity extends AppCompatActivity {
 
-
     SettingsModel settingsModel;
+    private static final int PICK_IMAGE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +69,67 @@ public class SettingsActivity extends AppCompatActivity {
 
         SettingsAdapter settingsAdapter = new SettingsAdapter(SettingsActivity.this,settingsModelList);
         recyclerView.setAdapter(settingsAdapter);
+
+        Button buttonGetImage =findViewById(R.id.button_get_image);
+        buttonGetImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
+    }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            Uri imageUri = data.getData();
+
+            //usuniecie sharedpreferences z drawable slot
+            SharedPreferences sharedPreferencesRemove=getSharedPreferences("PREFS_BACK",MODE_PRIVATE);
+            sharedPreferencesRemove.edit().remove("background").apply();
+
+            //wysłanie danych tymczasowych shared preferences
+            SharedPreferences sharedPreferences=getSharedPreferences("PREFS_BACK_DISK",MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString("backgroundFromDisk", String.valueOf(imageUri));
+            editor.apply();
+
+            data= new Intent(SettingsActivity.this,MainActivity.class);
+            startActivity(data);
+
+         /*   Intent intent = new Intent(SettingsActivity.this,MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);*/
+            Toast.makeText(SettingsActivity.this,"Theme changed",Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_change_color_toolbar:
+
+                return true;
+            case R.id.action_black_font:
+                // Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
 
     }
