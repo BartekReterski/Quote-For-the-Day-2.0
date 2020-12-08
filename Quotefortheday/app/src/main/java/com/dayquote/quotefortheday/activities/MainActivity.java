@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -46,6 +47,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.dayquote.quotefortheday.BuildConfig;
 import com.dayquote.quotefortheday.R;
 import com.dayquote.quotefortheday.models.FavoriteDatabase;
 import com.dayquote.quotefortheday.models.QuoteDatabase;
@@ -57,6 +59,9 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -79,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     RealmConfiguration realmConfig;
     SharedPreferences sharedPreferences;
     SharedPreferences sharedPreferencesCalendar;
+    SharedPreferences prefsFromDisk;
     String quoteName;
     String quoteWiki;
     String quoteAuthor;
@@ -110,9 +116,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
             //odebranie danych na temat wybranego tła z dysku użytkownika oraz ustawienie tła layoutu
-            SharedPreferences prefs3 = getSharedPreferences("PREFS_BACK_DISK",
+             prefsFromDisk= getSharedPreferences("PREFS_BACK_DISK",
                     MODE_PRIVATE);
-            String stringBackgroundFromDisk = prefs3.getString("backgroundFromDisk", "");;
+            String stringBackgroundFromDisk = prefsFromDisk.getString("backgroundFromDisk", "");;
             if (stringBackgroundFromDisk.isEmpty() || (stringBackgroundFromDisk == null)) {
 
             } else {
@@ -139,6 +145,16 @@ public class MainActivity extends AppCompatActivity {
         quoteAuthor=sharedPreferences1.getString("quoteAuthor","null2");
         quoteWiki=sharedPreferences1.getString("quoteWiki","null");
         TextView quoteText= findViewById(R.id.quoteText);
+
+        //odebranie danych na temat stanu checkboxa z kolorem czcionki
+        prefsFromDisk= getSharedPreferences("PREFS_BACK_DISK",
+                MODE_PRIVATE);
+        boolean check_box_value=prefsFromDisk.getBoolean("check_black_font",false);
+        if(check_box_value){
+            quoteText.setTextColor(Color.BLACK);
+        }else{
+            quoteText.setTextColor(Color.WHITE);
+        }
         quoteText.setText(quoteName+" \n\n"+" - "+quoteAuthor);
         // Action24h();
         
@@ -264,7 +280,8 @@ public class MainActivity extends AppCompatActivity {
                 Notifications();
                 return true;
             case R.id.action_about_app:
-                // Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show();
+
+                AboutApp();
                 return true;
 
             case R.id.action_settings:
@@ -569,5 +586,34 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void AboutApp() {
+
+        String versionNumber = BuildConfig.VERSION_NAME;
+
+        ViewGroup viewGroup = findViewById(android.R.id.content);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.about_app_alert_dialog, viewGroup, false);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        final AlertDialog alertDialogAboutApp = builder.create();
+        alertDialogAboutApp.show();
+
+        TextView appInfo= alertDialogAboutApp.findViewById(R.id.app_info);
+        appInfo.setText("Version: " + versionNumber);
+        ExpandableTextView expandableTextView= alertDialogAboutApp.findViewById(R.id.expand_text_view);
+        expandableTextView.setText("Images used in application:"+ "\n\n"+"Photo by Anca Gabriela Zosin on Unsplash, Photo by Annie Spratt on Unsplash, Photo by Anton Repponen on Unsplash, Photo by CHUTTERSNAP on Unsplash," +
+                "Photo by Courtney Smith on Unsplash, Photo by guille pozzi on Unsplash, Photo by Imleedh Ali on Unsplash, Photo by Jordane Mathieu on Unsplash, " +
+                "Photo by Luka Vovk on Unsplash, Photo by Mark Rall on Unsplash, Photo by Simon Berger on Unsplash, Photo by Tom Gainor on Unsplash, Photo by Will Turner on Unsplash," +
+                " Photo by Yuki Dog on Unsplash");
+
+        Button buttonOk=alertDialogAboutApp.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialogAboutApp.dismiss();
+            }
+        });
+
+
+    }
 
 }

@@ -35,9 +35,10 @@
 
         <Button
             android:id="@+id/button_get_image"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_200sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="#f5f5f5"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"

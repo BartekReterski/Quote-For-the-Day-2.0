@@ -5,11 +5,12 @@
         android:id="@+id/action_change_color_toolbar"
         android:icon="@drawable/ic_change_color_toolbar"
         android:title="Change toolbar color"
+        android:visible="false"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_black_font"
-        android:title="Black font"
+        android:title="Black text on theme"
         android:checkable="true"
         app:showAsAction="never" />
 

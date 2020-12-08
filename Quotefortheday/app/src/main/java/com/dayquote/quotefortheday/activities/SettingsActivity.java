@@ -27,6 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     SettingsModel settingsModel;
     private static final int PICK_IMAGE = 100;
+    SharedPreferences sharedPreferencesSetFromDisk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,14 @@ public class SettingsActivity extends AppCompatActivity {
         settingsModelList.add(settingsModel);
         settingsModel = new SettingsModel("Choinka",R.drawable.image_l);
         settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_m);
+        settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_n);
+        settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_o);
+        settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_p);
+        settingsModelList.add(settingsModel);
 
         SettingsAdapter settingsAdapter = new SettingsAdapter(SettingsActivity.this,settingsModelList);
         recyclerView.setAdapter(settingsAdapter);
@@ -95,17 +104,15 @@ public class SettingsActivity extends AppCompatActivity {
             sharedPreferencesRemove.edit().remove("background").apply();
 
             //wysłanie danych tymczasowych shared preferences
-            SharedPreferences sharedPreferences=getSharedPreferences("PREFS_BACK_DISK",MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
+            sharedPreferencesSetFromDisk=getSharedPreferences("PREFS_BACK_DISK",MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferencesSetFromDisk.edit();
             editor.putString("backgroundFromDisk", String.valueOf(imageUri));
             editor.apply();
 
             data= new Intent(SettingsActivity.this,MainActivity.class);
+            data.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(data);
 
-         /*   Intent intent = new Intent(SettingsActivity.this,MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);*/
             Toast.makeText(SettingsActivity.this,"Theme changed",Toast.LENGTH_LONG).show();
 
         }
@@ -115,6 +122,11 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
+
+        //odebranie danych na temat ustawienia checkboxa
+        sharedPreferencesSetFromDisk=getSharedPreferences("PREFS_BACK_DISK",MODE_PRIVATE);
+        boolean check_box_value=sharedPreferencesSetFromDisk.getBoolean("check_black_font",false);
+        menu.findItem(R.id.action_black_font).setChecked(check_box_value);
         return true;
     }
     @Override
@@ -124,7 +136,27 @@ public class SettingsActivity extends AppCompatActivity {
 
                 return true;
             case R.id.action_black_font:
-                // Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show();
+                sharedPreferencesSetFromDisk=getSharedPreferences("PREFS_BACK_DISK",MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferencesSetFromDisk.edit();
+                if(item.isChecked()){
+                    item.setChecked(false);
+                    editor.putBoolean("check_black_font",false);
+                    editor.apply();
+                    Intent intent= new Intent(SettingsActivity.this,MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+                }else{
+
+                    item.setChecked(true);
+                    editor.putBoolean("check_black_font",true);
+                    editor.apply();
+                    Intent intent= new Intent(SettingsActivity.this,MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+                }
+
                 return true;
 
             default:
