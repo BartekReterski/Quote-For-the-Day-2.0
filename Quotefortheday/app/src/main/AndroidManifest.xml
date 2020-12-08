@@ -17,6 +17,7 @@
         android:theme="@style/Theme.QuoteForTheDay"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
         <activity

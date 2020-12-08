@@ -91,7 +91,8 @@ public class FavoriteActivity extends AppCompatActivity {
                 if(results.isEmpty()){
                     Toast.makeText(FavoriteActivity.this,"Favorite Quotes is empty - Please add quotes",Toast.LENGTH_LONG).show();
                 }else{
-                    SavetoFile();
+                    //SavetoFile();
+                    RuntimePermissions();
                 }
 
                 return true;
@@ -158,7 +159,7 @@ public class FavoriteActivity extends AppCompatActivity {
     //eksport ulubionych cytatów do pliku tekstowego
     private void SavetoFile(){
         
-        RuntimePermissions();
+        //RuntimePermissions();
         try {
             RealmResults<FavoriteDatabase> realmObj = realm.where(FavoriteDatabase.class).findAll();
             String allResult=new Gson().toJson(realm.copyFromRealm(realmObj));
@@ -202,7 +203,7 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onPermissionGranted() {
                 //    Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_LONG).show();
-
+                SavetoFile();
             }
 
             @Override

@@ -329,7 +329,8 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        saveBitmap();
+                        RuntimePermissions();
+                       // saveBitmap();
 
                     }
                 }, 1000);
@@ -348,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
 
     //zapisanie screenshot w postaci bitmapy
     public void saveBitmap() {
-        RuntimePermissions();
+        //RuntimePermissions();
         Bitmap bitmap= getBitmapFromView();
         try {
 
@@ -400,6 +401,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPermissionGranted() {
                 //    Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_LONG).show();
+                saveBitmap();
 
             }
 
