@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
-            android:text="notification time"
+            android:text="Notification time"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold">
 

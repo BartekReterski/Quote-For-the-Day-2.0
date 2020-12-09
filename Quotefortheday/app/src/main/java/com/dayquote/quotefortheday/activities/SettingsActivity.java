@@ -75,6 +75,14 @@ public class SettingsActivity extends AppCompatActivity {
         settingsModelList.add(settingsModel);
         settingsModel = new SettingsModel("Choinka",R.drawable.image_p);
         settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_s);
+        settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_t);
+        settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_w);
+        settingsModelList.add(settingsModel);
+        settingsModel = new SettingsModel("Choinka",R.drawable.image_y);
+        settingsModelList.add(settingsModel);
 
         SettingsAdapter settingsAdapter = new SettingsAdapter(SettingsActivity.this,settingsModelList);
         recyclerView.setAdapter(settingsAdapter);

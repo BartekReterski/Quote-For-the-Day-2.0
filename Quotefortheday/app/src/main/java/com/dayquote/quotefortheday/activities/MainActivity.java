@@ -446,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
         if(hourShared==0 && minuteShared==0){
 
 
-            notificationText.setText("notification time");
+            notificationText.setText("Notification time");
             deleteNotification.setVisibility(View.GONE);
         }else{
 
@@ -602,7 +602,7 @@ public class MainActivity extends AppCompatActivity {
         TextView appInfo= alertDialogAboutApp.findViewById(R.id.app_info);
         appInfo.setText("Version: " + versionNumber);
         ExpandableTextView expandableTextView= alertDialogAboutApp.findViewById(R.id.expand_text_view);
-        expandableTextView.setText("Images used in application:"+ "\n\n"+"Photo by Anca Gabriela Zosin on Unsplash, Photo by Annie Spratt on Unsplash, Photo by Anton Repponen on Unsplash, Photo by CHUTTERSNAP on Unsplash," +
+        expandableTextView.setText("Images used in application:"+ "\n\n"+"Designed by starline(Freepik), Photo by Vincent Ghilione on Unsplash, Photo by Evie S. on Unsplash, Photo by David Moum on Unsplash, Photo by Geran de Klerk on Unsplash, Photo by Anca Gabriela Zosin on Unsplash, Photo by Annie Spratt on Unsplash, Photo by Anton Repponen on Unsplash, Photo by CHUTTERSNAP on Unsplash," +
                 "Photo by Courtney Smith on Unsplash, Photo by guille pozzi on Unsplash, Photo by Imleedh Ali on Unsplash, Photo by Jordane Mathieu on Unsplash, " +
                 "Photo by Luka Vovk on Unsplash, Photo by Mark Rall on Unsplash, Photo by Simon Berger on Unsplash, Photo by Tom Gainor on Unsplash, Photo by Will Turner on Unsplash," +
                 " Photo by Yuki Dog on Unsplash");

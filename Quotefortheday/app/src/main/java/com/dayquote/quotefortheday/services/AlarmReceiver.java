@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.dayquote.quotefortheday.R;
 import com.dayquote.quotefortheday.activities.MainActivity;
+import com.dayquote.quotefortheday.activities.SplashActivity;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -25,7 +26,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         int notificationId = intent.getIntExtra("notificationId", 0);
 
         // uruchomienie activity z powiadomienia
-        Intent mainIntent = new Intent(context, MainActivity.class);
+        Intent mainIntent = new Intent(context, SplashActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, mainIntent, 0);
 
         // inicjalizacja notificationManager

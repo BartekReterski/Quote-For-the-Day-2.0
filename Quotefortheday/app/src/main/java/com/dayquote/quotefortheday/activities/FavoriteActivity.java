@@ -41,6 +41,8 @@ public class FavoriteActivity extends AppCompatActivity {
     Realm realm;
     RecyclerView recyclerView;
     FavoriteAdapter favoriteAdapter;
+    int selectedValue;
+    int checkedItem=2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +110,7 @@ public class FavoriteActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(FavoriteActivity.this);
         alertDialog.setTitle("Sort");
         String[] items = {"Author(ascending)", "Author(descending)","Time added"};
-        int checkedItem = 1;
+        //int checkedItem = 2;
         alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -120,6 +122,9 @@ public class FavoriteActivity extends AppCompatActivity {
 
                             FavoriteAdapter favoriteAdapterAscending = new FavoriteAdapter(FavoriteActivity.this,resultFavoritesAscending);
                             recyclerView.setAdapter(favoriteAdapterAscending);
+                            checkedItem=0;
+
+
                         }
 
                         break;
@@ -130,6 +135,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
                             FavoriteAdapter favoriteAdapterAscending = new FavoriteAdapter(FavoriteActivity.this,resultFavoritesDscending);
                             recyclerView.setAdapter(favoriteAdapterAscending);
+                            checkedItem=1;
                         }
                         break;
                     case 2:
@@ -139,6 +145,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
                             favoriteAdapter = new FavoriteAdapter(FavoriteActivity.this,results);
                             recyclerView.setAdapter(favoriteAdapter);
+                            checkedItem=2;
                         }
 
                         break;

@@ -91,7 +91,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                                 AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
                                         mCtx);
                                 alertDialog2.setTitle("Confirm Delete");
-                                        alertDialog2.setMessage("Are you sure you want delete this quote: "+holder.favoriteQuoteName.getText().toString());
+                                        alertDialog2.setMessage("Are you sure you want to delete this quote: "+holder.favoriteQuoteName.getText().toString());
                                 alertDialog2.setPositiveButton("YES",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
