@@ -59,6 +59,10 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.mopub.common.MoPub;
+import com.mopub.common.SdkConfiguration;
+import com.mopub.common.SdkInitializationListener;
+import com.mopub.mobileads.MoPubView;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -69,7 +73,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import android.util.Base64;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import io.realm.Realm;
@@ -89,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     String quoteWiki;
     String quoteAuthor;
 
+    MoPubView moPubView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
         Realm.init(this);
         CreatePrePopulateDatabase();
         FloatedButtonsLogic();
-        DatabaseLogic();
-
+        //DatabaseLogic();
+        Action24h();
         //odebranie danych na temat wybranego tła i sprawdzenie czy dane są poprawne
         SharedPreferences prefs2 = getSharedPreferences("PREFS_BACK",
                 MODE_PRIVATE);
@@ -156,12 +163,39 @@ public class MainActivity extends AppCompatActivity {
             quoteText.setTextColor(Color.WHITE);
         }
         quoteText.setText(quoteName+" \n\n"+" - "+quoteAuthor);
-        // Action24h();
+        //reklamy
+
+        /*moPubView= findViewById(R.id.mopub_view);
+        moPubView.setAdUnitId("b195f8dd8ded45fe847ad89ed1d016da");
+        initalizeSDK("b195f8dd8ded45fe847ad89ed1d016da");*/
+
+
         
     }
 
+/*
+    private void initalizeSDK(String adUnit) {
 
+        Map<String, String> mediatedNetworkConfiguration1 = new HashMap<>();
+        mediatedNetworkConfiguration1.put("<custom-adapter-class-data-key>","<custom-adapter-class-data-value>");
+        Map<String, String> mediatedNetworkConfiguration2 = new HashMap<>();
+        mediatedNetworkConfiguration2.put("<custom-adapter-class-data-key>","<custom-adapter-class-data-value>");
 
+        SdkConfiguration sdkConfiguration= new SdkConfiguration.Builder(adUnit).withLegitimateInterestAllowed(false).build();
+        MoPub.initializeSdk(MainActivity.this,sdkConfiguration,initsSdkListener());
+    }
+
+    private SdkInitializationListener initsSdkListener() {
+        return  new SdkInitializationListener() {
+            @Override
+            public void onInitializationFinished() {
+
+                moPubView.loadAd();
+
+            }
+        };
+    }
+*/
 
     private void Action24h(){
         Calendar calendar = Calendar.getInstance();
@@ -422,6 +456,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy () {
         realm.close();
         super.onDestroy();
+      //  moPubView.destroy();
     }
 
     private void Notifications(){

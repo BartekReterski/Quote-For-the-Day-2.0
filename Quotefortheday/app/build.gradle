@@ -48,4 +48,26 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation('com.mopub:mopub-sdk:5.12.0@aar') {
+        transitive = true
+    }
+    //below required to solve "Cannot fit requested classes in a single dex file (# methods: 95393 > 65536 ; # fields: 76187 > 65536)" error after adding mopub
+    implementation 'com.android.support:multidex:1.0.3'
+}
+
+//below needed for mopub integration
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+    maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
+}
+
+//below needed to solve "Invoke-customs are only supported starting with Android O (--min-api 26)" error after adding mopub.
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }

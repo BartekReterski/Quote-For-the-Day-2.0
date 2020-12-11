@@ -24,6 +24,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/mopub_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:moPubAdSize="match_view"
+        >
+
+    </com.mopub.mobileads.MoPubView>
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/material_design_android_floating_action_menu"
         android:layout_width="wrap_content"
