@@ -136,10 +136,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         });
 
         //fullscreen text cytatu
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public boolean onLongClick(View v) {
                 View dialogView = LayoutInflater.from(mCtx).inflate(R.layout.alert_dialog_favorite_full_item, holder.viewGroup, false);
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
                 builder.setView(dialogView);
@@ -158,9 +157,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                         alertDialogFullQuote.dismiss();
                     }
                 });
+                return  true;
             }
-        });
 
+            }
+        );
 
     }
 
