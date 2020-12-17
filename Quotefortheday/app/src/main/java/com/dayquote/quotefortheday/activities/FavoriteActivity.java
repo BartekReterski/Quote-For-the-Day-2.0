@@ -23,13 +23,19 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.mopub.common.MoPub;
+import com.mopub.common.SdkConfiguration;
+import com.mopub.common.SdkInitializationListener;
+import com.mopub.mobileads.MoPubView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import io.realm.Realm;
@@ -41,7 +47,7 @@ public class FavoriteActivity extends AppCompatActivity {
     Realm realm;
     RecyclerView recyclerView;
     FavoriteAdapter favoriteAdapter;
-    int selectedValue;
+    MoPubView moPubView;
     int checkedItem=2;
 
     @Override
@@ -56,7 +62,35 @@ public class FavoriteActivity extends AppCompatActivity {
 
         realm= Realm.getInstance(favoriteConfig);
         LoadData();
+
+        //reklamy
+        moPubView= findViewById(R.id.mopub_view);
+        moPubView.setAdUnitId("b195f8dd8ded45fe847ad89ed1d016da");
+        initalizeSDK("b195f8dd8ded45fe847ad89ed1d016da");
     }
+
+    private void initalizeSDK(String adUnit) {
+
+        Map<String, String> mediatedNetworkConfiguration1 = new HashMap<>();
+        mediatedNetworkConfiguration1.put("<custom-adapter-class-data-key>","<custom-adapter-class-data-value>");
+        Map<String, String> mediatedNetworkConfiguration2 = new HashMap<>();
+        mediatedNetworkConfiguration2.put("<custom-adapter-class-data-key>","<custom-adapter-class-data-value>");
+
+        SdkConfiguration sdkConfiguration= new SdkConfiguration.Builder(adUnit).withLegitimateInterestAllowed(false).build();
+        MoPub.initializeSdk(FavoriteActivity.this,sdkConfiguration,initsSdkListener());
+    }
+
+    private SdkInitializationListener initsSdkListener() {
+        return  new SdkInitializationListener() {
+            @Override
+            public void onInitializationFinished() {
+
+                moPubView.loadAd();
+
+            }
+        };
+    }
+
 
     private void LoadData(){
 

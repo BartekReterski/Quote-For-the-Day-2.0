@@ -165,15 +165,14 @@ public class MainActivity extends AppCompatActivity {
         quoteText.setText(quoteName+" \n\n"+" - "+quoteAuthor);
         //reklamy
 
-        /*moPubView= findViewById(R.id.mopub_view);
+        moPubView= findViewById(R.id.mopub_view);
         moPubView.setAdUnitId("b195f8dd8ded45fe847ad89ed1d016da");
-        initalizeSDK("b195f8dd8ded45fe847ad89ed1d016da");*/
+        initalizeSDK("b195f8dd8ded45fe847ad89ed1d016da");
 
 
         
     }
 
-/*
     private void initalizeSDK(String adUnit) {
 
         Map<String, String> mediatedNetworkConfiguration1 = new HashMap<>();
@@ -195,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-*/
 
     private void Action24h(){
         Calendar calendar = Calendar.getInstance();

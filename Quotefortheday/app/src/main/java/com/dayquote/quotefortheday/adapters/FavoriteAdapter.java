@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.dayquote.quotefortheday.activities.WikiActivity;
 import com.dayquote.quotefortheday.models.FavoriteDatabase;
 
 import java.util.List;
+import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -59,6 +62,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         String favoriteQuoteAuthor=favorite.getQuoteAuthorFav();
         String favoriteQuoteWiki=favorite.getQuoteWikiFav();
         String deleteQuoteName=favorite.getQuoteNameFav();
+
 
         holder.favoriteQuoteName.setText(favorite.getQuoteNameFav()+" \n\n"+" - "+favoriteQuoteAuthor);
         holder.favoriteMoreOption.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +135,33 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             }
         });
 
+        //fullscreen text cytatu
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                View dialogView = LayoutInflater.from(mCtx).inflate(R.layout.alert_dialog_favorite_full_item, holder.viewGroup, false);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
+                builder.setView(dialogView);
+                final AlertDialog alertDialogFullQuote = builder.create();
+                Objects.requireNonNull(alertDialogFullQuote.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alertDialogFullQuote.show();
+
+                TextView notificationText = alertDialogFullQuote.findViewById(R.id.quoteFullScreen);
+                ImageView deleteNotification= alertDialogFullQuote.findViewById(R.id.deleteFullScreenQuote);
+
+                notificationText.setText(favorite.getQuoteNameFav()+" \n\n"+" - "+favoriteQuoteAuthor);
+
+                deleteNotification.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialogFullQuote.dismiss();
+                    }
+                });
+            }
+        });
+
+
     }
 
 
@@ -144,10 +175,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
         TextView favoriteQuoteName;
         ImageView favoriteMoreOption;
+        ViewGroup viewGroup;
 
         public FavoriteViewHolder(View itemView) {
             super(itemView);
-
+            viewGroup = itemView.findViewById(android.R.id.content);
             favoriteQuoteName=itemView.findViewById(R.id.quoteTextFavorite);
             favoriteMoreOption = itemView.findViewById(R.id.more_option);
         }
