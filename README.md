@@ -1,0 +1,6 @@
+If you are the kind of person who likes to start a day with some form of contemplation or you are looking for a daily dose of inspiration, this application is perfect for you. "Your Quote of the Day" is a collection of more than 1000 of the best, thought-provoking statements coming from various authors. Take a moment of reflection and allow yourself to immerse in the wisdom of the greatest philosophers, scientists, and writers of all time.
+
+One appropriate quote can induce us to deep contemplation for a whole day. Therefore, the user will have access to only one selected quote per day so that he can delve deeper into its meaning.
+
+The app contains simple and intuitive interface along with beautiful high definition backgrounds. Also, it allows the user for certain amount of customization like choosing a specific photo as a background. Moreover, the user can set daily notifications about a new quote at the time of his choice. Apart from the sharing option and references to Wikipedia, "Your Quote of the Day" does not require permanent access to the Internet. Furthermore, one of the greatest advantages of the application is the ability to add quotes to the favorites list and the ability of viewing them later.
+https://play.google.com/store/apps/details?id=com.dayquote.quotefortheday
